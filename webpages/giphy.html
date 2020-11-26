@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Generator| WebDev</title>
+  <link rel="stylesheet" href="webpages.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body style="background-image: url(/images/giphy.png)">
+  <nav class="navbar">
+    <div class="nav_class">
+      <span style="font-size: 3.2rem; margin: 12px 40px">APIs</span>
+
+      <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+      <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+      <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+      <span style="
+            font-weight: bold;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            margin-left: 70px;
+          ">Giphy</span>
+      <input id="search" type="search" class="search" />
+      <button id="btnSearch" class="fa fa-search searchicon"></button>
+    </div>
+  </nav>
+
+  <div class="main_content">
+    <div class="nyt_main" id="Giphy" style="flex-wrap: wrap"></div>
+  </div>
+  <script>
+    function createNode(element) {
+      return document.createElement(element);
+    }
+
+    function append(parent, el) {
+      return parent.appendChild(el);
+    }
+
+    const div = document.getElementById("Giphy");
+    const url =
+      "https://api.giphy.com/v1/gifs/trending?api_key=wNVwS00Kz836yBnwiAM8bvY3juHCHW40&limit=50&rating=g";
+
+    fetch(url)
+      .then((res) => res.json())
+      .then(function (giphy_data) {
+        let giphy1 = giphy_data.data;
+        console.log(giphy1);
+        return giphy1.map(function (giphy1) {
+          let div1 = createNode("div");
+          h4 = createNode("h3");
+          img = createNode("img");
+
+          div1.style.display = "flex";
+          div1.style.flexDirection = "column";
+          div1.style.width = "26%";
+          div1.style.height = "350px";
+          div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+          div1.style.margin = "15px";
+          div1.style.borderRadius = "5px";
+          img.srcset = `${giphy1.images.original.url}`;
+          img.style.height = "250px";
+          h4.innerHTML = `${giphy1.title}`;
+          if (h4) {
+            append(div1, img);
+            append(div1, h4);
+            append(div, div1);
+          }
+        });
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error));
+      });
+
+    document.getElementById("btnSearch").addEventListener("click", (e) => {
+      search_function();
+    });
+    function search_function() {
+      let str = document.getElementById("search").value.trim();
+      if (str != "") {
+        div.innerHTML = "";
+        let url1 =
+          `https://api.giphy.com/v1/gifs/search?api_key=wNVwS00Kz836yBnwiAM8bvY3juHCHW40&limit=50&q=` +
+          str;
+
+        console.log(url1);
+        fetch(url1)
+          .then((response) => response.json())
+          .then(function (giphy_data) {
+            let giphy2 = giphy_data.data;
+            return giphy2.map(function (giphy2) {
+              let div2 = createNode("div");
+              h3 = createNode("h3");
+              img1 = createNode("img");
+
+              div2.style.display = "flex";
+              div2.style.flexDirection = "column";
+              div2.style.width = "26%";
+              div2.style.height = "350px";
+              div2.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+              div2.style.margin = "15px";
+              div2.style.borderRadius = "5px";
+              img1.srcset = `${giphy2.images.original.url}`;
+              img1.style.height = "250px";
+              h3.innerHTML = `${giphy2.title}`;
+              if (h3) {
+                append(div2, img1);
+                append(div2, h3);
+                append(div, div2);
+              }
+            });
+          })
+          .catch(function (error) {
+            console.log(JSON.stringify(error));
+          });
+      }
+    }
+  </script>
+  <style>
+    #giphy {
+      color: #303030;
+    }
+
+    h3 {
+      margin: 5px;
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: 500;
+      color: #1f202a;
+    }
+
+    input[type="search"] {
+      outline: 0;
+      padding: 10px;
+      width: 240px;
+      margin: 22px 0px;
+      margin-left: 200px;
+      border: 1px solid #303030ed;
+      border-radius: 0px;
+      font-size: 15px;
+    }
+
+    .searchicon {
+      border: 1px solid #303030ed;
+      width: 35px;
+      background-color: #303030ed;
+      margin: 22px 0px;
+      color: #fff;
+      font-size: 23px;
+    }
+  </style>
+</body>
+
+</html>

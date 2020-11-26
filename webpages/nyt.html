@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Generator| WebDev</title>
+    <link rel="stylesheet" href="webpages.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav_class">
+            <span style="font-size: 3.2rem; margin: 12px 40px;">APIs</span>
+
+            <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+            <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+            <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+            <span style="font-weight: bold;
+            font-size: 1.8rem; display: flex; align-items: center; margin-left: 70px;">The New York Times</span>
+        </div>
+    </nav>
+
+
+    <div class="main_content" style="background-color: #fff;">
+        <div class="nyt_main">
+            <ul id="authors"></ul>
+        </div>
+    </div>
+    <script>
+        function createNode(element) {
+            return document.createElement(element);
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el);
+        }
+
+        const ul = document.getElementById('authors');
+        const url = 'https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=GbAitutbFLmgUj60siAtFf6NgeN56Vd1';
+
+
+        fetch(url)
+            .then((res) => res.json())
+            .then(function (data) {
+                let articles = data.results;
+                return articles.map(function (articles) {
+                    let li = createNode('li'),
+                        h3 = createNode('h3'),
+                        a = createNode('a'),
+                        h4 = createNode('h4'),
+                        p = createNode('p');
+
+                    h4.innerHTML = `${articles.url}`;
+                    a.href = articles.url;
+                    h3.innerHTML = `${articles.title}`
+                    p.innerHTML = `${articles.abstract} `;
+                    append(li, h4);
+                    append(li, a)
+                    append(a, h3);
+                    append(li, p);
+                    append(ul, li);
+                    console.log(data);
+                })
+            })
+            .catch(function (error) {
+                console.log(JSON.stringify(error));
+            });
+
+    </script>
+    <style>
+        #authors {
+            color: #303030;
+            list-style: none;
+        }
+
+        h4,
+        p {
+            color: #1f202a;
+            font-weight: 300;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+
+        h3 {
+            font-weight: 300;
+            margin: 5px;
+            font-size: 1.5rem;
+            color: #2f00b2;
+        }
+
+        li {
+            margin-top: 30px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:focus,
+        a:hover,
+        a:active {
+            text-decoration: underline;
+            text-decoration-color: #2f00b2;
+        }
+
+        a:visited {
+            color: #73009F;
+            text-decoration: underline;
+            text-decoration-color: #73009F;
+        }
+    </style>
+
+</body>
+
+</html>

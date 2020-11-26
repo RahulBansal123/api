@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Generator| WebDev</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+        }
+
+        body {
+            background-size: cover;
+            background-position: 0 0;
+            background-attachment: fixed;
+            background-image: url(/images/homepage-blurred.jpg);
+        }
+
+        button {
+            background: none;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .navbar {
+            z-index: 3;
+            position: fixed;
+            width: 100vw;
+            backdrop-filter: blur(15px);
+            background-color: rgba(255, 255, 255, 0.89);
+            box-shadow: 0 3px 2px -2px rgba(0, 0, 0, .1);
+        }
+
+        .nav_class {
+            display: flex;
+            color: black;
+        }
+
+        .nav_items {
+            padding: 12px 40px;
+            border-style: none;
+            font-size: 1.4rem;
+        }
+
+        .nav_items:focus,
+        .nav_items:hover {
+            margin: 12px 0px;
+            cursor: default;
+            border-radius: 80px;
+            box-shadow: 0 4px 8px -2px rgba(0, 0, 0, .5);
+        }
+
+        .section1 {
+            height: 100vh;
+        }
+
+        .main_content {
+            z-index: 3;
+            padding: 20px;
+            position: absolute;
+            background: #fff;
+            width: 50%;
+            height: 75%;
+            display: flex;
+            flex-direction: column;
+            margin: 0px 25%;
+            margin-top: 110px;
+            border-radius: 30px;
+        }
+
+        .button_main,
+        .button_main:focus,
+        .button_main:active,
+        .button_main:hover,
+        .button_main:visited {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
+    </style>
+
+</head>
+
+<body background="/images/apple.png">
+
+    <nav class="navbar">
+        <div class="nav_class">
+            <span style="font-size: 3.2rem; margin: 12px 40px;">APIs</span>
+            <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+            <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+            <button class=nav_items autofocus><a class="button_main" href="contact.html">Contact</a></button>
+        </div>
+    </nav>
+    <div class="section1">
+
+        <div class="main_content">
+            <span
+                style="font-family: Helvetica, sans-serif,Arial;font-size: 4.2rem;font-weight: 700; display: inline; margin: auto;">PING
+                ME AT:</span>
+            <a href="https://www.linkedin.com/in/rahul-bansal-66a9581a6/" style="display: flex; margin: auto;"> <img
+                    src="/images/linkedin.png" width="240px" height="240px" alt="LinkedIn"></a>
+            <a href="https://github.com/RahulBansal123" style="display: flex; margin: auto;"> <img
+                    src="/images/github.png" width="200px" height="200px" alt="Github"></a>
+
+        </div>
+    </div>
+
+
+</body>
+<script src="/brusher.js"></script>
+<script>
+    const brusher1 = new Brusher({
+        image: "/images/homepage.jpg", // Path of the image to be used as a brush
+        keepCleared: true,     // Put the blur back after user has cleared it
+        stroke: 80,            // Stroke size for the brush
+        lineStyle: 'round',    // Brush style (round, square, butt)
+        element: ".section1",
+    });
+    brusher1.init();
+</script>
+
+
+</html>

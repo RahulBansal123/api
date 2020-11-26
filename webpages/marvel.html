@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Generator| WebDev</title>
+  <link rel="stylesheet" href="webpages.css" />
+</head>
+
+<body style="background-image: url(/images/marvel.png)">
+  <nav class="navbar">
+    <div class="nav_class">
+      <span style="font-size: 3.2rem; margin: 12px 40px">APIs</span>
+
+      <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+      <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+      <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+      <span style="
+            font-weight: bold;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            margin-left: 70px;
+          ">MARVEL</span>
+    </div>
+  </nav>
+
+  <div class="main_content">
+    <div class="nyt_main" id="Marvel" style="flex-wrap: wrap"></div>
+  </div>
+  <script>
+    function createNode(element) {
+      return document.createElement(element);
+    }
+
+    function append(parent, el) {
+      return parent.appendChild(el);
+    }
+
+    const div = document.getElementById("Marvel");
+    const url =
+      "https://gateway.marvel.com/v1/public/characters?modifiedSince=19000101&limit=100&ts=1&apikey=e22e4e393cf23f603531f3589d0aedf0&hash=310886ea82f3752149648f2c624260ce";
+
+    fetch(url)
+      .then((res) => res.json())
+      .then(function (marveldata) {
+        let marvel = marveldata.data.results;
+        return marvel.map(function (marvel) {
+          let div1 = createNode("div"),
+            h4 = createNode("h1"),
+            img = createNode("img"),
+            h5 = createNode("h4");
+          div1.style.display = "flex";
+          div1.style.flexDirection = "column";
+          div1.style.width = "30%";
+          div1.style.height = "650px";
+          div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+          div1.style.margin = "15px";
+          div1.style.borderRadius = "5px";
+          div1.style.backgroundColor = "#fff";
+          if (marvel.description) {
+            img.srcset = `${marvel.thumbnail.path}/portrait_xlarge.${marvel.thumbnail.extension}`;
+            img.style.width = "200px";
+            h4.innerHTML = `${marvel.name}`;
+            h5.innerHTML = `${marvel.description}`;
+            append(div1, img);
+            append(div1, h4);
+            append(div1, h5);
+            append(div, div1);
+          }
+
+          console.log(marvel);
+        });
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error));
+      });
+  </script>
+  <style>
+    h1,
+    h4 {
+      margin: 5px;
+      font-weight: 500;
+      color: #1f202a;
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Generator| WebDev</title>
+    <link rel="stylesheet" href="webpages.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body style="background-image: url(/images/spoonacular.png)">
+    <nav class="navbar">
+        <div class="nav_class">
+            <span style="font-size: 3.2rem; margin: 12px 40px">APIs</span>
+
+            <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+            <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+            <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+            <span style="
+            font-weight: bold;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            margin-left: 70px;
+          ">Spoonacular</span>
+        </div>
+    </nav>
+
+    <div class="main_content" style="background-color:  #8bce8ef3">
+        <div class="nyt_main" id="Spoonacular" style="flex-wrap: wrap"></div>
+    </div>
+    <div class="button_section">
+        <div class="button_crud_search">
+            <input id="Search" type="search" placeholder="Search Recipe"></button>
+            <button id="btnSearch" class="fa fa-search "></button>
+        </div>
+        <button id="Special" class="button_crud" autofocus>Today's Special</button>
+        <button id="ChatBot" class="button_crud">ChatBot</button>
+    </div>
+    <script>
+        function createNode(element) {
+            return document.createElement(element);
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el);
+        }
+        const div = document.getElementById("Spoonacular");
+        var link = document.createTextNode("Read More..");
+        //   document.getElementById("Popular").addEventListener("click", (e) => {
+        //     movie_data_func(
+        //        );
+        //   });
+
+        //   document.getElementById("Upcoming").addEventListener("click", (e) => {
+        //     movie_data_func(
+        //       "https://api.themoviedb.org/3/movie/upcoming?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1"
+        //     );
+        //   });
+        //   document.getElementById("Rated").addEventListener("click", (e) => {
+        //     movie_data_func(
+        //       "https://api.themoviedb.org/3/movie/top_rated?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1"
+        //     );
+        //   });
+
+        function dish_data(url = "https://api.spoonacular.com/recipes/random?number=20&tags=dessert?includeNutrition=true&apiKey=bd5d36d76e7f4f98a9b739dc52e99483") {
+            // div.innerHTML = "";
+            fetch(url)
+                .then((res) => res.json())
+                .then(function (recipedata) {
+                    let dish = recipedata.recipes;
+                    // console.log(recipedata);
+                    return dish.map(function (dish) {
+
+                        let div1 = createNode("div"),
+                            img = createNode("img"),
+                            h3 = createNode("h3"),
+                            button_veg = createNode("button"),
+                            p = createNode("p"),
+                            a = createNode("a"),
+                            h5a = createNode("h5");
+
+                        div1.style.display = "flex";
+                        div1.style.flexDirection = "column";
+                        div1.style.width = "30%";
+                        div1.style.backgroundColor = "#fff";
+                        div1.style.minHeight = "500px";
+                        div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+                        div1.style.margin = "15px";
+                        div1.style.borderRadius = "5px";
+                        div1.style.position = "relative";
+
+                        button_veg.innerHTML = " "
+                        button_veg.classList.add("button_veg");
+                        img.style.height = "200px";
+
+
+                        if (dish.title && dish.image) {
+                            img.srcset = `${dish.image}`;
+                            h3.innerHTML = `${dish.title}`;
+                            if (dish.vegetarian) {
+                                button_veg.style.backgroundColor = "#0f0";
+                            }
+                            else { button_veg.style.backgroundColor = "red" }
+                            p.innerHTML = `${dish.summary}`;
+                            // a.append(link);
+                            // a.href = "https://www.geeksforgeeks.org";  
+                            // a.href=dish_url(`${dish.id}`);
+                            // var str = "Read More...";
+                            // var result = str.link("https://www.w3schools.com");
+                            console.log(dish);
+                            h5a.innerHTML = `Time : ${dish.readyInMinutes} min.`;
+                            append(div1, img);
+                            append(div1, h3);
+                            append(div1, button_veg);
+                            append(div1, p);
+                            // append(div1, str);
+                            append(div1, h5a);
+                            append(div, div1);
+                        }
+
+                    });
+                })
+                .catch(function (error) {
+                    console.log(JSON.stringify(error));
+                });
+        }
+        window.onload = dish_data();
+    </script>
+    <style>
+        #movies {
+            color: #303030;
+        }
+
+        p {
+            color: #000;
+            font-size: 1rem;
+            margin: 10px;
+            line-height: 1.4rem;
+            height: 7rem;
+            font-weight: 0;
+            overflow: hidden;
+        }
+
+        h5 {
+            margin: 10px;
+            color: #1f202a;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-weight: 100;
+            font-size: 16px;
+        }
+
+        h3 {
+            margin: 10px;
+
+            font-size: 1.4rem;
+            margin-top: 20px;
+            font-weight: 700;
+            color: #1f202a;
+        }
+
+
+
+        .button_section {
+            margin-right: 10px;
+            float: right;
+            margin-top: 160px;
+            border: 10px solid #8bce8ef3;
+            border-radius: 20px;
+            background-color: #8bce8ef3;
+        }
+
+        .button_crud {
+            background-color: #161515;
+            font-size: 1.4rem;
+            color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+            width: 180px;
+            height: 100px;
+            border: 0px;
+            border-radius: 20px;
+        }
+
+        .button_crud_search {
+            font-size: 1rem;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 185px;
+            height: 35px;
+        }
+
+        .button_crud_search:hover,
+        .button_crud_search:active,
+        .button_crud_search:focus {
+            outline: 0;
+        }
+
+        .button_crud:hover,
+        .button_crud:focus,
+        .button_crud:active {
+            background-color: #e5e5e8fb;
+            color: #161515;
+            font-weight: 600;
+            border: 2px solid #161515;
+        }
+
+        .button_veg {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            margin: 10px;
+            background-color: rgb(0, 255, 0);
+            width: 25px;
+            height: 25px;
+            border-radius: 25px;
+            border: none;
+        }
+
+        #Search {
+            padding: 10px;
+        }
+
+        #Search:hover,
+        #Search:active,
+        #Search:focus {
+            outline: none;
+        }
+    </style>
+</body>
+
+</html>

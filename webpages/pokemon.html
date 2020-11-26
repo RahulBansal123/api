@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Generator| WebDev</title>
+    <link rel="stylesheet" href="webpages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body style="background-image: url(/images/pokemon.jpeg); ">
+    <nav class="navbar">
+        <div class="nav_class">
+            <span style="font-size: 3.2rem; margin: 12px 40px;">APIs</span>
+
+            <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+            <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+            <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+            <span style="font-weight: bold;
+            font-size: 1.8rem; display: flex; align-items: center; margin-left: 70px;">Pokémon</span>
+            <input id="search_pokemon" type="search" class="search" />
+            <button id="btnSearch" class="fa fa-search searchicon"></button>
+        </div>
+    </nav>
+
+    <div class="main_content" style="background-color: #fcf6df;">
+        <div class="nyt_main" id="Pokemon" style="flex-wrap: wrap;">
+        </div>
+    </div>
+    <script>
+        function createNode(element) {
+            return document.createElement(element);
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el);
+        }
+
+        const div = document.getElementById('Pokemon');
+        const url = 'https://pokeapi.co/api/v2/pokemon?limit=1000';
+
+
+        fetch(url)
+            .then((res) => res.json())
+            .then(function (data) {
+                let pokemon = data.results;
+                return pokemon.map(function (pokemon) {
+
+                    fetch(pokemon.url)
+                        .then((res) => res.json())
+                        .then(function (pokedata) {
+                            let div1 = createNode('div'),
+                                h4 = createNode('h1'),
+                                img = createNode('img'),
+                                h5 = createNode('h1');
+                            div1.style.display = "flex";
+                            div1.style.flexDirection = "column";
+                            div1.style.width = "26%";
+                            div1.style.height = "10%"
+
+                            div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+                            div1.style.margin = "15px";
+                            div1.style.borderRadius = "5px";
+                            div1.style.backgroundColor = "#fff";
+                            img.srcset = `https://pokeres.bastionbot.org/images/pokemon/${pokedata.id}.png`;
+                            img.style.width = "200px";
+                            h4.innerHTML = `${pokedata.id}`;
+                            h5.innerHTML = `${pokemon.name}`;
+                            append(div1, img);
+                            append(div1, h4);
+                            append(div1, h5);
+                            append(div, div1);
+                        })
+
+                })
+            })
+            .catch(function (error) {
+                console.log(JSON.stringify(error));
+            });
+        document.getElementById("btnSearch").addEventListener("click", (e) => {
+            search_function();
+        });
+        function search_function() {
+            let str = document.getElementById("search_pokemon").value.trim();
+            if (str != "") {
+                div.innerHTML = "";
+                let url1 = "";
+                fetch(url)
+                    .then((res) => res.json())
+                    .then(function (data) {
+                        let pokemon = data.results;
+                        return pokemon.map(function (pokemon) {
+
+                            fetch(pokemon.url)
+                                .then((res) => res.json())
+                                .then(function (pokedata) {
+
+                                    if (str == pokemon.name) {
+                                        let div1 = createNode('div'),
+                                            h4 = createNode('h1'),
+                                            img = createNode('img'),
+                                            h5 = createNode('h1');
+                                        div1.style.display = "flex";
+                                        div1.style.flexDirection = "column";
+                                        div1.style.width = "26%";
+                                        div1.style.height = "10%"
+
+                                        div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+                                        div1.style.margin = "15px";
+                                        div1.style.borderRadius = "5px";
+                                        div1.style.backgroundColor = "#fff";
+                                        img.srcset = `https://pokeres.bastionbot.org/images/pokemon/${pokedata.id}.png`;
+                                        img.style.width = "200px";
+                                        h4.innerHTML = `${pokedata.id}`;
+                                        h5.innerHTML = `${pokemon.name}`;
+                                        append(div1, img);
+                                        append(div1, h4);
+                                        append(div1, h5);
+                                        append(div, div1)
+                                    }
+
+                                })
+
+                        })
+                    })
+                    .catch(function (error) {
+                        console.log(JSON.stringify(error));
+                    });
+
+            }
+        }
+
+    </script>
+    <style>
+        #pokemon {
+            color: #303030;
+        }
+
+        h1,
+        h2 {
+            margin: 5px;
+            font-weight: 500;
+            color: #1f202a;
+        }
+
+        input[type="search"] {
+            outline: 0;
+            padding: 10px;
+            width: 240px;
+            margin: 22px 0px;
+            margin-left: 200px;
+            border: 1px solid #303030ed;
+            border-radius: 0px;
+            font-size: 15px;
+        }
+
+        .searchicon {
+            border: 1px solid #303030ed;
+            width: 35px;
+            background-color: #303030ed;
+            margin: 22px 0px;
+            color: #fff;
+            font-size: 23px;
+        }
+    </style>
+
+</body>
+
+</html>

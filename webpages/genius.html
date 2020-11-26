@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Generator| WebDev</title>
+  <link rel="stylesheet" href="webpages.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body style="background-image: url(/images/genius.png)">
+  <nav class="navbar">
+    <div class="nav_class">
+      <span style="font-size: 3.2rem; margin: 12px 40px">APIs</span>
+      <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+      <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+      <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+      <span style="
+            font-weight: bold;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            margin-left: 70px;
+          ">Songs</span>
+    </div>
+  </nav>
+  <div class="main_content" style="background-color:  #010101">
+    <div class="nyt_main" id="Song" style="flex-wrap: wrap"></div>
+  </div>
+  <div class="button_section">
+    <div class="button_crud_search">
+      <input id="Search_input" type="search" placeholder="Search Songs"></input>
+      <button id="btnSearch" class="fa fa-search "></button>
+    </div>
+    <button id="recommend" class="button_crud" autofocus>Recommendations</button>
+  </div>
+  <script>
+    function createNode(element) {
+      return document.createElement(element);
+    }
+    function append(parent, el) {
+      return parent.appendChild(el);
+    }
+    const div = document.getElementById("Song");
+    const btn_search = document.getElementById("btnSearch").addEventListener("click", (e) => {
+
+    });
+    document.getElementById("recommend").addEventListener("click", (e) => { song_data_func(); });
+    document.getElementById("btnSearch").addEventListener("click", (e) => {
+      div.innerHTML = "";
+      const input_str = document.getElementById("Search_input").value;
+      const url = "https://deezerdevs-deezer.p.rapidapi.com/search?q=" + input_str + "&rapidapi-key=d3a9cbe5b3msh6af4fd17f887799p1e94b2jsn546962b3b792&limit=100"
+      fetch(url)
+        .then((res) => res.json())
+        .then(function (song_data) {
+          if (song_data.total == "") { alert("Enter Correct Song Name..."); }
+          else {
+            let song = song_data.data;
+            console.log(song);
+            return song.map(function (song) {
+              let div1 = createNode("div"),
+                img = createNode("img"),
+                h3 = createNode("h3"),
+                h5 = createNode("h5"),
+                imglogo1 = createNode("img"),
+
+                a1 = createNode("a");
+              div1.style.display = "flex";
+              div1.style.flexDirection = "column";
+              div1.style.width = "30%";
+              div1.style.backgroundColor = "#fff";
+              div1.style.minHeight = "480px";
+              div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+              div1.style.margin = "15px";
+              div1.style.borderRadius = "5px";
+              div1.style.position = "relative";
+              imglogo1.style.margin = "12px";
+
+              imglogo1.style.marginBottom = "18px";
+
+              img.srcset = `${song.album.cover_medium}`;
+              img.style.height = "250px"
+
+              a1.href = `${song.preview}`;
+
+
+              h3.innerHTML = `${song.title}`;
+              h5.innerHTML = `${song.artist.name}`;
+              imglogo1.srcset = "/images/play.png";
+
+
+              imglogo1.style.position = "absolute";
+              imglogo1.style.right = "0";
+              imglogo1.style.bottom = "0";
+
+
+
+              imglogo1.style.width = "43px";
+              imglogo1.style.height = "40px";
+
+
+              append(div1, img);
+              append(div1, h3);
+              append(div1, h5);
+              append(a1, imglogo1);
+
+              append(div1, a1);
+
+              append(div, div1);
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(JSON.stringify(error));
+        });
+    });
+    function song_data_func() {
+      div.innerHTML = "";
+      const url = "https://shazam.p.rapidapi.com/songs/list-recommendations?locale=en-US&key=484129036&rapidapi-key=d3a9cbe5b3msh6af4fd17f887799p1e94b2jsn546962b3b792"
+      fetch(url)
+        .then((res) => res.json())
+        .then(function (song_data) {
+          let song = song_data.tracks;
+          return song.map(function (song) {
+            let div1 = createNode("div"),
+              img = createNode("img"),
+              h3 = createNode("h3"),
+              h5 = createNode("h5"),
+              imglogo1 = createNode("img"),
+              imglogo3 = createNode("img"),
+              imglogo4 = createNode("img"),
+              div2 = createNode("div"),
+              a1 = createNode("a"),
+              a3 = createNode("a"),
+              a4 = createNode("a");
+            div1.style.display = "flex";
+            div1.style.flexDirection = "column";
+            div1.style.width = "30%";
+            div1.style.backgroundColor = "#fff";
+            div1.style.minHeight = "480px";
+            div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+            div1.style.margin = "15px";
+            div1.style.borderRadius = "5px";
+            div1.style.position = "relative";
+            img.srcset = `${song.share.image}`;
+            img.style.height = "250px"
+            h3.innerHTML = `${song.title}`;
+            h5.innerHTML = `${song.subtitle}`;
+            imglogo1.srcset = "/images/apple.png";
+            imglogo3.srcset = "/images/shazam.png";
+            imglogo4.srcset = "/images/save.jpg";
+            imglogo1.style.margin = "2px";
+            imglogo3.style.margin = "2px";
+            imglogo4.style.margin = "12px";
+            imglogo4.style.marginBottom = "18px";
+            a1.href = `${song.hub.options[0].actions[0].uri}`;
+            a3.href = `${song.url}`;
+            a4.href = `${song.hub.actions[1].uri}`;
+            div2.style.margin = "10px";
+            div2.style.position = "absolute";
+            div2.style.right = "0";
+            div2.style.bottom = "0";
+            imglogo4.style.position = "absolute";
+            imglogo4.style.left = "0";
+            imglogo4.style.bottom = "0";
+            imglogo1.style.width = "43px";
+            imglogo3.style.width = "40px";
+            imglogo4.style.width = "38px";
+            imglogo1.style.height = "38px";
+            imglogo3.style.height = "40px";
+            imglogo4.style.height = "38px";
+            append(div1, img);
+            append(div1, h3);
+            append(div1, h5);
+            append(a1, imglogo1);
+            append(a3, imglogo3);
+            append(a4, imglogo4);
+            append(div2, a1);
+            append(div2, a3);
+            append(div1, div2);
+            append(div1, a4);
+            append(div, div1);
+          });
+        })
+        .catch(function (error) {
+          console.log(JSON.stringify(error));
+        });
+    }
+    window.onload = song_data_func();
+  </script>
+  <style>
+    #Song {
+      color: #303030;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin: 20px;
+      font-weight: 700;
+      color: #1f202a;
+    }
+
+    h5 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #8f9098;
+      margin-left: 22px;
+    }
+
+    .button_section {
+      margin-right: 10px;
+      float: right;
+      margin-top: 160px;
+      border: 15px solid #010101;
+      border-radius: 20px;
+      background-color: #010101;
+    }
+
+    .button_crud {
+      background-color: #161515;
+      font-size: 19px;
+      color: aliceblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+      width: 180px;
+      height: 100px;
+      border: 0px;
+      border-radius: 20px;
+    }
+
+    .button_crud_search {
+      font-size: 1rem;
+      color: #000;
+      display: flex;
+      border: 1.2 solid #fff;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 185px;
+      height: 35px;
+    }
+
+    .button_crud_search:hover,
+    .button_crud_search:active,
+    .button_crud_search:focus {
+      outline: 0;
+    }
+
+    .button_crud:hover,
+    .button_crud:focus,
+    .button_crud:active {
+      background-color: #e5e5e8fb;
+      color: #161515;
+      font-weight: 600;
+      border: 2px solid #161515;
+    }
+
+    #Search_input {
+      padding: 10px;
+    }
+
+    #Search_input:hover,
+    #Search_input:active,
+    #Search_input:focus {
+      outline: none;
+    }
+
+    #btnSearch,
+    #btnSearch:hover,
+    #btnSearch:active,
+    #btnSearch:focus {
+      border: 1px solid #fff;
+      background-color: #fff;
+      font-weight: 700;
+    }
+  </style>
+</body>
+
+</html>

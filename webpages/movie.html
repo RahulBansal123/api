@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Generator| WebDev</title>
+  <link rel="stylesheet" href="webpages.css" />
+</head>
+
+<body style="background-image: url(/images/movies.png)">
+  <nav class="navbar">
+    <div class="nav_class">
+      <span style="font-size: 3.2rem; margin: 12px 40px">APIs</span>
+
+      <button class=nav_items><a class="button_main" href="/apis.html">Home</a></button>
+      <button class=nav_items><a class="button_main" href="about.html">About Us</a></button>
+      <button class=nav_items><a class="button_main" href="contact.html">Contact</a></button>
+      <span style="
+            font-weight: bold;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            margin-left: 70px;
+          ">MoviesDB</span>
+    </div>
+  </nav>
+
+  <div class="main_content" style="background-color: rgb(224, 219, 117);">
+    <div class="nyt_main" id="Movies" style="flex-wrap: wrap;"></div>
+  </div>
+  <div class="button_section">
+    <button id="Popular" class="button_crud" autofocus>Popular</button>
+    <button id="Latest" class="button_crud">Latest</button>
+    <button id="Upcoming" class="button_crud">Upcoming</button>
+    <button id="Rated" class="button_crud">Top Rated</button>
+
+  </div>
+  <script>
+    function createNode(element) {
+      return document.createElement(element);
+    }
+
+    function append(parent, el) {
+      return parent.appendChild(el);
+    }
+    const div = document.getElementById("Movies");
+    document.getElementById("Popular").addEventListener("click", (e) => {
+      movie_data_func(
+        "https://api.themoviedb.org/3/movie/popular?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1"
+      );
+    });
+    document.getElementById("Latest").addEventListener("click", (e) => {
+      div.innerHTML = "";
+
+      fetch(
+        "https://api.themoviedb.org/3/movie/latest?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US"
+      )
+        .then((res) => res.json())
+        .then(function (movie) {
+          console.log(movie);
+          // return movie.map(function (movie) {
+          let div1 = createNode("div"),
+            h3 = createNode("h3"),
+            img = createNode("img"),
+            h5 = createNode("h5");
+          h6 = createNode("h6");
+
+          div1.style.display = "flex";
+          div1.style.flexDirection = "column";
+          div1.style.width = "29%";
+          div1.style.backgroundColor = "#fff";
+          div1.style.minHeight = "686px";
+          div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+          div1.style.margin = "15px";
+          div1.style.borderRadius = "5px";
+          div1.style.position = "relative";
+          if (movie.overview) {
+            img.srcset = `https://image.tmdb.org/t/p/w185//${movie.poster_path}`;
+            h3.innerHTML = `${movie.title}`;
+            h5.innerHTML = `${movie.overview}`;
+            h6.innerHTML = `Status : ${movie.status}`;
+            append(div1, img);
+            append(div1, h3);
+            append(div1, h5);
+            append(div1, h6);
+            append(div, div1);
+          }
+          // });
+        })
+        .catch(function (error) {
+          console.log(JSON.stringify(error));
+        });
+    });
+    document.getElementById("Upcoming").addEventListener("click", (e) => {
+      movie_data_func(
+        "https://api.themoviedb.org/3/movie/upcoming?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1"
+      );
+    });
+    document.getElementById("Rated").addEventListener("click", (e) => {
+      movie_data_func(
+        "https://api.themoviedb.org/3/movie/top_rated?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1"
+      );
+    });
+
+    function movie_data_func(url = "https://api.themoviedb.org/3/movie/popular?api_key=0e8a4ed23d092db3a6423d9686f4d0fa&language=en-US&page=1") {
+      div.innerHTML = "";
+      fetch(url)
+        .then((res) => res.json())
+        .then(function (moviesdata) {
+          let movie = moviesdata.results;
+          return movie.map(function (movie) {
+            let div1 = createNode("div"),
+              h3 = createNode("h3"),
+              img = createNode("img"),
+              h5 = createNode("h5");
+            h6 = createNode("h6");
+            div1.style.display = "flex";
+            div1.style.flexDirection = "column";
+            div1.style.width = "29%";
+            div1.style.backgroundColor = "#fff";
+            div1.style.minHeight = "686px";
+            div1.style.boxShadow = "0 4px 8px -2px rgba(0, 0, 0, .4)";
+            div1.style.margin = "15px";
+            div1.style.borderRadius = "5px";
+            div1.style.position = "relative";
+            if (movie.overview) {
+              img.srcset = `https://image.tmdb.org/t/p/w185//${movie.poster_path}`;
+              h3.innerHTML = `${movie.title}`;
+              h5.innerHTML = `${movie.overview}`;
+              h6.innerHTML = `Released On : ${movie.release_date}`;
+              append(div1, img);
+              append(div1, h3);
+              append(div1, h5);
+              append(div1, h6);
+              append(div, div1);
+            }
+
+            console.log(movie);
+          });
+        })
+        .catch(function (error) {
+          console.log(JSON.stringify(error));
+        });
+    }
+    window.onload = movie_data_func();
+  </script>
+  <style>
+    #movies {
+      color: #303030;
+    }
+
+    h5 {
+      margin: 5px;
+      margin-bottom: 40px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #1f202a;
+    }
+
+    h3 {
+      margin: 5px;
+
+      font-size: 29px;
+      margin-top: 20px;
+      font-weight: 700;
+      color: #1f202a;
+    }
+
+    h6 {
+      position: absolute;
+      margin: 10px;
+      bottom: 0;
+      right: 0;
+      /* display: flex; */
+      font-weight: 100;
+      /* margin-left: 50px; */
+      font-size: 16px;
+
+      color: #707073;
+    }
+
+    .button_section {
+      margin-right: 10px;
+      float: right;
+      margin-top: 140px;
+      border: 10px solid rgb(224, 219, 117);
+      border-radius: 20px;
+      background-color: rgb(224, 219, 117);
+    }
+
+    .button_crud {
+      background-color: #161515;
+      font-size: 19px;
+      color: aliceblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+      width: 180px;
+      height: 100px;
+      border: 0px;
+      border-radius: 20px;
+    }
+
+    .button_crud:hover,
+    .button_crud:focus,
+    .button_crud:active {
+      background-color: #e5e5e8fb;
+      color: #161515;
+      font-weight: 600;
+      border: 2px solid #161515;
+    }
+  </style>
+
+</body>
+
+</html>

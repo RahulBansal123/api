@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>API Generator| WebDev</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            html,
+            body {
+                overflow: hidden;
+            }
+
+            body {
+                background-size: cover;
+                background-position: 0 0;
+                background-attachment: fixed;
+                background-image: url(images/homepage-blurred.jpg);
+            }
+
+            button {
+                background: none;
+                cursor: pointer;
+            }
+
+            button:focus {
+                outline: none;
+            }
+
+            .navbar {
+                z-index: 3;
+                position: fixed;
+                width: 100vw;
+                backdrop-filter: blur(15px);
+                background-color: rgba(255, 255, 255, 0.89);
+                box-shadow: 0 3px 2px -2px rgba(0, 0, 0, .1);
+            }
+
+            .nav_class {
+                display: flex;
+                color: black;
+            }
+
+            .nav_items {
+                padding: 12px 40px;
+                border-style: none;
+                font-size: 1.4rem;
+            }
+
+            .nav_items:focus,
+            .nav_items:hover {
+                margin: 12px 0px;
+                cursor: default;
+                border-radius: 80px;
+                box-shadow: 0 4px 8px -2px rgba(0, 0, 0, .5);
+            }
+
+            .section1 {
+                height: 100vh;
+            }
+
+            .main_content {
+                z-index: 3;
+                padding: 20px;
+                position: absolute;
+                background: rgb(243, 243, 243);
+                width: 50%;
+                height: 75%;
+                display: flex;
+                flex-direction: column;
+                margin: 0px 25%;
+                margin-top: 110px;
+                border-radius: 30px;
+            }
+
+            @media screen and (max-width:1200px) {
+                .main_content {
+                    background: none;
+                }
+            }
+
+            .api_row {
+                height: 33.3%;
+                display: block;
+            }
+
+            .box {
+                border: none;
+                border-radius: 40px;
+                box-shadow: 0 4px 8px -2px rgba(0, 0, 0, .1);
+                width: 30%;
+                margin: 10px;
+                height: 90%;
+                position: relative;
+            }
+
+            .box:focus,
+            .box:hover {
+                border-radius: 40px;
+                box-shadow: 0 4px 8px -2px rgba(81, 81, 81, 0.8);
+            }
+
+            .ribbon {
+                position: absolute;
+                right: -5px;
+                top: -5px;
+                z-index: 1;
+                overflow: hidden;
+                width: 75px;
+                height: 75px;
+                text-align: right;
+            }
+
+            .ribbon span {
+                font-size: 10px;
+                font-weight: bold;
+                color: #FFF;
+                text-align: center;
+                line-height: 20px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                width: 100px;
+                display: block;
+                background: linear-gradient(#1C1C1C 0%, #595959 100%);
+                box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+                position: absolute;
+                top: 19px;
+                right: -21px;
+            }
+
+            .ribbon span::before {
+                content: "";
+                position: absolute;
+                left: 0px;
+                top: 100%;
+                z-index: -1;
+                border-left: 3px solid #595959;
+                border-right: 3px solid transparent;
+                border-bottom: 3px solid transparent;
+                border-top: 3px solid #595959;
+            }
+
+            .ribbon span::after {
+                content: "";
+                position: absolute;
+                right: 0px;
+                top: 100%;
+                z-index: -1;
+                border-left: 3px solid transparent;
+                border-right: 3px solid #595959;
+                border-bottom: 3px solid transparent;
+                border-top: 3px solid #595959;
+            }
+
+            .button_main,
+            .button_main:focus,
+            .button_main:active,
+            .button_main:active {
+                text-decoration: none;
+                color: #000;
+                font-weight: 500;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar">
+            <div class="nav_class">
+                <span style="font-size: 3.2rem; margin: 12px 40px;">APIs</span>
+                <button class=nav_items autofocus><a class="button_main" href="/apis.html">Home</a></button>
+                <button class=nav_items><a class="button_main" href="webpages/about.html">About Us</a></button>
+                <button class=nav_items><a class="button_main" href="webpages/contact.html">Contact</a></button>
+            </div>
+        </nav>
+        <div class="section1">
+
+            <div class="main_content">
+                <div class="api_row">
+                    <button class="box" onclick="button_onclick('nyt.html')"
+                        style="background: url(./images/nyt.png) center;" id="nyt">
+                        <div class="ribbon"><span>NewYork Times</span></div>
+                    </button>
+
+                    <button id="genius" class="box" onclick="button_onclick('genius.html')"
+                        style="background: url(./images/Genius.png) no-repeat center;background-size: 95%; ">
+                        <div class="ribbon"><span>Genius</span></div>
+                    </button>
+                    <button id="url" onclick="url_shorten()" class="box"
+                        style="background: url(./images/url.png) no-repeat center;">
+                        <div class="ribbon"><span>URL Shortener</span></div>
+                    </button>
+                </div>
+                <div class="api_row">
+                    <button class="box" id="giphy" onclick="button_onclick('giphy.html')"
+                        style="background: url(./images/giphy.png) no-repeat center;background-size: 85%;">
+                        <div class="ribbon"><span>Giphy</span></div>
+                    </button><button id="movies" class="box" onclick="button_onclick('movie.html')"
+                        style="background: url(./images/movies.png) no-repeat center;background-size: 90%;">
+                        <div class="ribbon"><span>MoviesDB</span></div>
+                    </button><button id="spoonacular" class="box" onclick="button_onclick('spoonacular.html')"
+                        style="background: url(./images/Spoonacular.png) no-repeat center;background-size: 80%;">
+                        <div class="ribbon"><span>Spoonacular</span></div>
+                    </button>
+                </div>
+                <div class="api_row">
+
+                    <button id="pokemon" class="box" onclick="button_onclick('pokemon.html')"
+                        style="background: url(./images/pokemon.jpeg) no-repeat center; background-size: 100%;">
+                        <div class="ribbon"><span>Pokémon</span></div>
+                    </button>
+                    <button id="marvel" class="box" onclick="button_onclick('marvel.html')"
+                        style="background: url(./images/Marvel.png) no-repeat center;background-size: 100%; ">
+                        <div class="ribbon"><span>Marvel</span></div>
+                    </button>
+                    <button id="jokes" class="box" onclick="jokes()"
+                        style="background: url(./images/jokes.png) no-repeat center;background-size: 75%;">
+                        <div class="ribbon"><span>Jokes</span></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function jokes() {
+                fetch("https://official-joke-api.appspot.com/random_joke")
+                    .then((res) => res.json())
+                    .then(function (data) {
+                        console.log(data);
+                        var joke = prompt(`${data.setup}`, "Try to think BUDDY!!");
+                        var str = `${data.punchline}`;
+                        if (joke == str) { a = "CORRECT BUDDY"; }
+                        else { a = "Better Luck Next Time!" }
+                        var joke_ans = alert(a + "\nThe answer is: " + str);
+                    })
+            }
+            function url_shorten() {
+                let url_str = prompt("Enter the url");
+                if (url_str) {
+                    fetch('https://api-ssl.bitly.com/v4/bitlinks', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': '66623434bde136e0c6ef9bdcb5fb7000b5167235',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "long_url": url_str, "domain": "bit.ly" })
+                    })
+                        .then((res) => res.json())
+                        .then(function (data) {
+                            let url_data = `${data.link}`;
+                            if (url_data == "undefined") {
+                                alert("You have either entered incorrect url or url is already in use...");
+                            }
+                            else {
+                                prompt("Your URL is : ", url_data);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+                else { alert("Enter any url...") }
+            }
+            function button_onclick(url) {
+                window.open("./webpages/" + url);
+            }
+        </script>
+
+    </body>
+    <script src="brusher.js"></script>
+    <script>
+        const brusher1 = new Brusher({
+            image: "images/homepage.jpg", // Path of the image to be used as a brush
+            keepCleared: true,     // Put the blur back after user has cleared it
+            stroke: 80,            // Stroke size for the brush
+            lineStyle: 'round',    // Brush style (round, square, butt)
+            element: ".section1",
+        });
+        brusher1.init();
+    </script>
+
+
+</html>

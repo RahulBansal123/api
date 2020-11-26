@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+body {
+    height: 100vh;
+    /* background-size: cover;
+    background-position: 0 0;
+    background-attachment: fixed; */
+    background-image:url(/images/nyt.png) ;
+}
+
+
+button {
+    background: none;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+.navbar {
+    z-index: 4;
+    position: fixed;
+    width: 100vw;
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.89);
+    box-shadow: 0 3px 2px -2px rgba(0, 0, 0, .1);
+}
+
+.nav_class {
+    display: flex;
+    color: black;
+}
+
+.nav_items {
+    padding: 12px 40px;
+    border-style: none;
+    font-size: 1.4rem;
+}
+
+.nav_items:focus,
+.nav_items:hover {
+    margin: 12px 0px;
+    cursor: default;
+    border-radius: 80px;
+    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, .5);
+}
+
+.main_content {
+    z-index: 3;
+    padding: 10px;
+    position: absolute;
+    background: rgb(243, 243, 243);
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    margin: 0px 17%;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    border-radius: 30px;
+    min-height: 80vh;
+}
+
+
+.nyt_main {
+    color: #fff;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    margin-top: 5px;
+    align-items: center;
+}
+.button_main,     .button_main:focus,
+        .button_main:active,
+        .button_main:hover, .button_main:visited {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
